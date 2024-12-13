@@ -103,11 +103,7 @@ void parar() {
 # Ejemplo de uso
 instrucciones_astar = [
 "Me muevo arriba",
-"Me muevo arriba a la derecha",
-"Me muevo arriba a la derecha",
 "Me muevo arriba",
-"Me muevo arriba a la izquierda",
-"Me muevo arriba a la izquierda"
 ]
 
 codigo = generar_codigo_robot(instrucciones_astar)

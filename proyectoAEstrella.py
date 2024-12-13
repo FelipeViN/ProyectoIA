@@ -232,30 +232,23 @@ def imprimir_laberinto(laberinto):
     print()
 
 
-# metodo principal 
 def main():
     inicio = time.time()
     laberinto = [
-    ['l', 'l', 'o', 'l', 'o', 'o', 'o', 'o', 'o', 'l'],
-    ['l', 'o', 'l', 'o', 'o', 'o', 'o', 'l', 'o', 'o'],
-    ['l', 'l', 'o', 'o', 'o', 'l', 'l', 'o', 'l', 'l'],
-    ['l', 'l', 'o', 'l', 'o', 'o', 'l', 's', 'l', 'o'],
-    ['l', 'o', 'l', 'l', 'o', 'o', 'l', 'l', 'l', 'l'],
-    ['l', 'l', 'o', 'l', 'o', 'l', 'o', 'l', 'o', 'l'],
-    ['l', 'o', 'o', 'l', 'l', 'o', 'o', 'o', 'o', 'l'],
-    ['l', 'l', 'l', 'o', 'l', 'l', 'o', 'l', 'l', 'o'],
-    ['l', 'o', 'o', 'o', 'l', 'o', 'l', 'l', 'o', 'o'],
-    ['o', 'l', 'l', 'l', 'l', 'o', 'l', 'e', 'o', 'l'],
-    
-]
+        ['l', 'l', 'o', 'l', 'o', 'o', 'o', 'o', 'o', 'l'],
+        ['l', 'o', 'l', 'o', 'o', 'o', 'o', 'l', 'o', 'o'],
+        ['l', 'l', 'o', 'o', 'o', 'l', 'l', 'o', 'l', 'l'],
+        ['l', 'l', 'o', 'l', 'o', 'o', 'l', 's', 'l', 'o'],
+        ['l', 'o', 'l', 'l', 'o', 'o', 'l', 'l', 'l', 'l'],
+        ['l', 'l', 'o', 'l', 'o', 'l', 'o', 'l', 'o', 'l'],
+        ['l', 'o', 'o', 'l', 'l', 'o', 'o', 'o', 'o', 'l'],
+        ['l', 'l', 'l', 'o', 'l', 'l', 'o', 'l', 'l', 'o'],
+        ['l', 'o', 'o', 'o', 'l', 'o', 'l', 'l', 'o', 'o'],
+        ['o', 'l', 'l', 'l', 'l', 'o', 'l', 'e', 'o', 'l'],
+    ]
 
     recorrido = ListaDoble()
     recorrido.agregar_nodo(halla_fila_entrada(laberinto) - 1, halla_columna_entrada(laberinto) - 1)
-
-    # imprimir_laberinto(laberinto)
-    # print(f"Tamaño del laberinto filas {len(laberinto)} columnas {len(laberinto[0])}")
-    # print(f"Punto de partida original {halla_fila_entrada(laberinto)},{halla_columna_entrada(laberinto)}")
-    # print(f"Punto de salida original {halla_fila_salida(laberinto)},{halla_columna_salida(laberinto)}")
 
     xs = halla_columna_salida(laberinto)  # Columna de la salida
     ys = halla_fila_salida(laberinto)     # Fila de la salida
@@ -263,24 +256,21 @@ def main():
     ye = halla_fila_entrada(laberinto)    # Fila de la entrada
     ct = 0
 
+    # Lista para guardar las instrucciones
+    instrucciones_astar = []
+
     while xe != xs or ye != ys:  # Mientras no se haya llegado a la salida
-        # print("-------------------------------")
-        # print("Posición actualizada")
         mov = movimiento(laberinto, ct)
-        print(f'"{mov}",')
+        instrucciones_astar.append(mov)  # Guardar cada movimiento en la lista
         recorriendo_laberinto(mov, laberinto, recorrido)
 
-        # print(f"Nuevo punto de partida {halla_fila_entrada(laberinto)},{halla_columna_entrada(laberinto)}")
-        # imprimir_laberinto(laberinto)
-
-        # actualizamos las coordenadas de la entrada
+        # Actualizamos las coordenadas de la entrada
         xe = halla_columna_entrada(laberinto)
         ye = halla_fila_entrada(laberinto)
 
         ct += 1
-        # print(f"Movimiento número: {ct}")
 
-        # condición para evitar un bucle infinito
+        # Condición para evitar un bucle infinito
         if ct > 1000:
             fin = time.time()
             tiempo_ejecucion = fin - inicio
@@ -288,11 +278,12 @@ def main():
             print("El algoritmo no encontró la salida dentro de 100 movimientos.")
             break
 
-    # if xe == xs and ye == ys:
-        # fin = time.time()
-        # tiempo_ejecucion = fin - inicio
-        # print(f"Tiempo de ejecución: {tiempo_ejecucion} segundos")
-        # print("¡Salida encontrada!")
+    # Imprimir la lista de instrucciones
+    print( instrucciones_astar)
+
+    # Retornar la lista de instrucciones
+    return instrucciones_astar
+
 
 if __name__ == "__main__":
-    main()
+    instrucciones_astar = main()
