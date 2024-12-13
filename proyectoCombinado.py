@@ -1,3 +1,7 @@
+import math
+import time
+
+# Funcion que Genera el Codigo
 def generar_codigo_robot(instrucciones):
     movimientos_robot = {
         "Me muevo arriba": "avanza(); delay(200);",
@@ -99,9 +103,6 @@ void parar() {
 """
     return codigo_robot
 
-import math
-import time
-
 # metodo que encuentra la columna de salida
 def halla_columna_salida(laberinto):
     i, j = 0, 0
@@ -165,7 +166,7 @@ def hn(X1, Y1, laberinto):
     resultado = math.sqrt((math.pow((X1 - X2), 2)) + (math.pow((Y1 - Y2), 2)))
     return resultado
 
-# nos indica a donde se movera, por el momento en cruz
+# nos indica a donde se movera.
 def movimiento(laberinto, n):
     n += 1
     columnaE = halla_columna_entrada(laberinto) - 1
@@ -335,6 +336,7 @@ def imprimir_laberinto(laberinto):
 
 def main():
     inicio = time.time()
+    # Laberinto
     laberinto = [
         ['l', 'l', 'o', 'l', 'o', 'o', 'o', 'o', 'o', 'l'],
         ['l', 'o', 'l', 'o', 'o', 'o', 'o', 'l', 'o', 'o'],
@@ -347,23 +349,24 @@ def main():
         ['l', 'o', 'o', 'o', 'l', 'o', 'l', 'l', 'o', 'o'],
         ['o', 'l', 'l', 'l', 'l', 'o', 'l', 'l', 'o', 'l'],
     ]
-
+    # Imprimir laberinto
     recorrido = ListaDoble()
+    # Agregar la entrada a la lista de recorrido
     recorrido.agregar_nodo(halla_fila_entrada(laberinto) - 1, halla_columna_entrada(laberinto) - 1)
 
     xs = halla_columna_salida(laberinto)  # Columna de la salida
     ys = halla_fila_salida(laberinto)     # Fila de la salida
     xe = halla_columna_entrada(laberinto) # Columna de la entrada
     ye = halla_fila_entrada(laberinto)    # Fila de la entrada
-    ct = 0
+    ct = 0                                # Contador de movimientos
 
     # Lista para guardar las instrucciones
     instrucciones_astar = []
 
     while xe != xs or ye != ys:  # Mientras no se haya llegado a la salida
-        mov = movimiento(laberinto, ct)
+        mov = movimiento(laberinto, ct) # Movimiento a realizar
         instrucciones_astar.append(mov)  # Guardar cada movimiento en la lista
-        recorriendo_laberinto(mov, laberinto, recorrido)
+        recorriendo_laberinto(mov, laberinto, recorrido) # Mover la posición de 'e' en el laberinto
 
         # Actualizamos las coordenadas de la entrada
         xe = halla_columna_entrada(laberinto)
@@ -381,6 +384,7 @@ def main():
 
     # Imprimir la lista de instrucciones
     print( instrucciones_astar)
+    # Pasamos las Instrucciones al codigo que nos ayuda a mover el robot
     codigo = generar_codigo_robot(instrucciones_astar)
     print(codigo)
     # Retornar la lista de instrucciones
